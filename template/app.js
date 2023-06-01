@@ -1,6 +1,6 @@
 import StarRating from './star-rating/index.js';
 
-const $containers = [...document.querySelectorAll('.star-rating')];
+const $containers = [...document.querySelectorAll('.star-rating')]; //[div.star-rating, div.star-rating]
 const $currentRatings = document.querySelectorAll('.current-rating > span');
 
 $containers.forEach(($container, i) => {
