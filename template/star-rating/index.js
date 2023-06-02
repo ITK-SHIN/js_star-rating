@@ -38,28 +38,54 @@ const StarRating = ($container) => {
   }
 
   /****************************  기능 5, 6 구현 시작 ********************** */
-  const icon = $container.querySelectorAll('i');
-  //console.log(icon);
+        const icon = $container.querySelectorAll('i');
+        let selectStr;
+        
+        for (let i = 0; i < icon.length; i++) {
+                /* 마우스 올라갈시 */
+                icon[i].addEventListener('mouseenter', () => {
+                        let j = i;
+                        
+                        while (j >= 0) {
+                                icon[j].classList.add('hovered');
+                                j--;
+                        }});
+                /* 마우스 벗어날시 */
+                icon[i].addEventListener('mouseleave', () => {
+                        icon[i].classList.remove('hovered');
+                });
+                /* 마우스 클릭시 */
+                icon[i].addEventListener('click', () => {
+                  let j = i;
+                  selectStr = j + 1;
+                  console.log(selectStr);
 
-  for (let i = 0; i < icon.length; i++) {
-    icon[i].addEventListener('mouseenter', () => {
-      let j = i;
-      while (j >= 0) {
-        icon[j].classList.add('hovered');
-        j--;
-      }
-    });
+                  while (j >= 0) {
+                    icon[j].classList.add('selected');
+                    j--;
+                  }
 
-    icon[i].addEventListener('mouseleave', () => {
-      icon[i].classList.remove('hovered');
-    });
-  }
+                  for (let k = i + 1; k < icon.length; k++) {
+                    icon[k].classList.remove('selected');
+                  }
+                  /* 커스템 이벤트 만들기 
+                starInfoEvent는 detail프로퍼티 값으로 선택된 star개수를 받는다. 
+                        */
+                  const starInfoEvent = new CustomEvent('rating-change', {
+                    detail: selectStr,
+                  });
 
-  $container.addEventListener('mouseleave', () => {
-    for (let i = 0; i < icon.length; i++) {
-      icon[i].classList.remove('hovered');
-    }
-  });
+                  $container.dispatchEvent(starInfoEvent);
+                });
+                        }
+        
+                /*$container 에서 마우스 벗어날때 icon 전체 hovered 제거*/
+                $container.addEventListener('mouseleave', () => {
+                for (let i = 0; i < icon.length; i++) {
+                icon[i].classList.remove('hovered');
+                }
+                });
+
   /****************************  기능 5, 6 구현  끝********************** */
 };
 
