@@ -1,14 +1,15 @@
 // do something!
+/*!!!!!!!!!!!!!!!!!!!!!!****************** 제출전 console.log 지우기 !!!!!!!!!!!!!!!!!**************/
 
 /*  star-rating 요소 내부의 css를 JavaScript로 자동 추가하기  시작*/
 const lastLink = document.querySelector('link[href="style.css"]');
-const createNewLink = document.createElement('link');
-lastLink.after(createNewLink);
+const newLink = document.createElement('link');
+lastLink.after(newLink);
 
-const NewLink = document.querySelectorAll('link');
-const lastNewLink = document.querySelectorAll('link')[NewLink.length-1];
-lastNewLink.setAttribute('href', 'star-rating/theme.css');
-lastNewLink.setAttribute('rel', 'stylesheet');
+newLink.setAttribute('href', 'star-rating/theme.css');
+newLink.setAttribute('rel', 'stylesheet');
+lastLink.after(newLink);
+
 /*  star-rating 요소 내부의 css를 JavaScript로 자동 추가하기  끝*/
 
 const StarRating = ($container) => {
@@ -73,8 +74,7 @@ const StarRating = ($container) => {
         icon[k].classList.remove('selected');
       }
       /* 커스템 이벤트 만들기 
-                starInfoEvent는 detail프로퍼티 값으로 선택된 star개수를 받는다. 
-                        */
+        starInfoEvent는 detail프로퍼티 값으로 선택된 star개수를 받는다.  */
       const starInfoEvent = new CustomEvent('rating-change', {
         detail: selectStr,
       });
@@ -95,3 +95,5 @@ const StarRating = ($container) => {
 
 
 export default StarRating;
+
+
