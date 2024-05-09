@@ -10,10 +10,10 @@ newLink.setAttribute('rel', 'stylesheet');
 lastLink.after(newLink);
 /*  star-rating 요소 내부의 css를 JavaScript로 자동 추가하기  끝*/
 
-
 const StarRating = ($container) => {
   const maxNumberOfStars = $container.dataset.maxRating;
   const starContainer = document.createElement('div');
+
   starContainer.classList.add('star-rating-container');
   $container.appendChild(starContainer);
 
@@ -27,41 +27,35 @@ const StarRating = ($container) => {
   starContainer.appendChild(fragment);
 
   /****************************  기능 5, 6, 7, 8 구현 시작 ********************** */ 
-  const $starIcon = [ ...$container.querySelectorAll('.star-rating-container > i')];
-  console.log($starIcon);
+  const $starIcons = [ ...$container.querySelectorAll('.star-rating-container > i')];
 
-  starContainer.addEventListener('mouseover', (e) => {
+   starContainer.addEventListener('mouseover', (e) => {
     e.stopPropagation();
     //이벤트를 발생시킨 target이 star-rating-container의 자식요소가 아니면 무시한다.
     if (!e.target.matches('.star-rating-container > i')) return;
 
-    const targetIndex = $starIcon.indexOf(e.target);
-
-    $starIcon.forEach((v, i) => {
-      if (i <= targetIndex) {
-        v.classList.add('hovered');
-      }
+    const targetIndex = $starIcons.indexOf(e.target);
+    $starIcons.forEach(($starIcon, i) => {
+      i <= targetIndex ?
+        $starIcon.classList.add('hovered') : null
     });
   });
-
-  starContainer.addEventListener('mouseout', (e) => {
-    $starIcon.forEach((v => {
-          v.classList.remove('hovered')
+ 
+  starContainer.addEventListener('mouseout', () => {
+    $starIcons.forEach(($starIcon => {
+          $starIcon.classList.remove('hovered')
         }))
     });
 
   starContainer.addEventListener('click', (e) => {
-    const targetIndex = $starIcon.indexOf(e.target);
+    if (!e.target.matches('.star-rating-container > i')) return;
+ 
+    const targetIndex = $starIcons.indexOf(e.target);
 
-    $starIcon.forEach((v, i) => {
-      if (i <= targetIndex) {
-        v.classList.toggle('selected', true)
-      } 
-      
-      if (i > targetIndex) {
-        v.classList.toggle('selected', false)
-      }
-      
+    $starIcons.forEach(($starIcon, i) => {
+       i <= targetIndex
+         ? $starIcon.classList.toggle('selected', true)
+         : $starIcon.classList.toggle('selected', false); 
     })
 
     const ratingChangeEvent = new CustomEvent('rating-change', {
@@ -70,6 +64,8 @@ const StarRating = ($container) => {
 
     $container.dispatchEvent(ratingChangeEvent);
   })
+
+
 };
 
 export default StarRating;

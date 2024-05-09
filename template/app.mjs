@@ -1,4 +1,4 @@
-import StarRating from './star-rating/test2.mjs';
+import StarRating from './star-rating/index최종.mjs';
 
 const $containers = [...document.querySelectorAll('.star-rating')]; //[div.star-rating, div.star-rating]
 const $currentRatingNumber = document.querySelectorAll('.current-rating > span');
